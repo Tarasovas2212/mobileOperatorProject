@@ -20,13 +20,20 @@ PhoneNumber.prototype.getStatus = function() {
 }
 
 
-PhoneNumber.prototype.addBalance = function(money) {
-    if (money > 0) {
-        this._balance += money
-    }
-    if (this._balance > 0) {
-        this._status = true
-    }
+PhoneNumber.prototype.addBalance = function(money, callback) {
+    setTimeout(function() {
+        var error = null
+        if (money > 0) {
+            this._balance += money
+            this._status = true
+        } else {
+            error = 'You cannot add negative balance'
+            console.log(error)
+        }
+        if (callback) {
+            callback(error, this.getBalance())
+        }
+    }.bind(this), 3000)
 }
 
 

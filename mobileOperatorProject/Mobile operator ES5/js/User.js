@@ -45,11 +45,8 @@ User.prototype.removeService = function(service) {
 }
 
 
-User.prototype.removeName = function(name, callback) {
-    setTimeout(function() {
-        this._name = null
-        console.log('Name has been removed')
-    }.bind(this), 3000)
+User.prototype.removeName = function() {
+    this._name = null
 }
 
 

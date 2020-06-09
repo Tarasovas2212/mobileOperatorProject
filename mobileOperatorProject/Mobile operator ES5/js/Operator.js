@@ -3,7 +3,6 @@ function Operator() {
     this._phoneNumberList = []
     this._usedPhoneNumberList = []
     this._serviceList = []
-    this._name = null
 }
 
 Operator.prototype._getItemById = function(id, list) {
@@ -98,19 +97,6 @@ Operator.prototype.removeUsedPhoneNumberFromListById = function(id) {
 }
 
 
-Operator.prototype.removeNameOfUser = function(userId, name, callback) {
-    var user = this.getUserFromListById(userId)
-    setTimeout(function() {
-        user.removeName(name, setTimeout(function() {
-            callback(userId)
-        }.bind(this), 3000))
-    }.bind(this), 2000)
-}
-
-//function(){
-// removePhoneNumberFromUser(userdId)
-// } используем для callback2
-
 Operator.prototype.removePhoneNumberFromUser = function(userId) {
     setTimeout(function() {
         var user = this.getUserFromListById(userId)
@@ -143,12 +129,20 @@ Operator.prototype.setPhoneNumberOfUserById = function(userId, phoneNumberId) {
 }
 
 
-
-
-
 Operator.prototype.addBalanceToPhoneNumberOfUser = function(userId, money) {
     var user = this.getUserFromListById(userId)
-    user.getPhoneNumber().addBalance(money)
+    if (user) {
+        user.getPhoneNumber().addBalance(money, function(err, data) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(data)
+                console.log(`Operation for ${user.getName()} successfull`)
+            }
+        })
+    } else {
+        console.log('User does not exist')
+    }
 }
 
 
